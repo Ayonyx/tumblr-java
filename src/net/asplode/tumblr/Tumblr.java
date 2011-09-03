@@ -20,6 +20,8 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpParams;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -116,6 +118,9 @@ public class Tumblr {
     private JSONObject Get(String url) throws ClientProtocolException, IOException,
             IllegalStateException, JSONException {
         HttpGet req = new HttpGet(url);
+        HttpParams params = new BasicHttpParams();
+        params.setParameter("http.protocol.handle-redirects", false);
+        req.setParams(params);
         HttpResponse response = client.execute(req);
         JSONObject result = new JSONObject(convertToString(response.getEntity().getContent()));
         return result;
@@ -151,6 +156,27 @@ public class Tumblr {
         }
         String url = BASE_URL + "/blog/" + blog + "/info" + "?api_key=" + oauth_key;
         JSONObject result = APIKeyGet(url);
+        return result;
+    }
+
+    public JSONObject getAvatar() throws NoBlogSetException, ClientProtocolException,
+            IllegalStateException, IOException, JSONException {
+        if (blog == null) {
+            throw new NoBlogSetException();
+        }
+        String url = BASE_URL + "/blog/" + blog + "/avatar";
+        System.out.println(url);
+        JSONObject result = Get(url);
+        return result;
+    }
+
+    public JSONObject getAvatar(int size) throws NoBlogSetException, ClientProtocolException,
+            IllegalStateException, IOException, JSONException {
+        if (blog == null) {
+            throw new NoBlogSetException();
+        }
+        String url = BASE_URL + "/blog/" + blog + "/avatar/" + size;
+        JSONObject result = Get(url);
         return result;
     }
 }
