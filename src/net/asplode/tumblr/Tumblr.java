@@ -59,8 +59,8 @@ public class Tumblr {
             OAuthExpectationFailedException, OAuthCommunicationException, ClientProtocolException,
             IOException {
         params.add(new BasicNameValuePair("x_auth_mode", "client_auth"));
-        params.add(new BasicNameValuePair("x_auth_username", "nsheridan@gmail.com"));
-        params.add(new BasicNameValuePair("x_auth_password", "7462pop"));
+        params.add(new BasicNameValuePair("x_auth_username", email));
+        params.add(new BasicNameValuePair("x_auth_password", password));
         HttpPost post = new HttpPost("https://www.tumblr.com/oauth/access_token");
         try {
             UrlEncodedFormEntity entity = new UrlEncodedFormEntity(params, "UTF-8");
@@ -97,7 +97,7 @@ public class Tumblr {
         consumer.sign(req);
         HttpResponse response = client.execute(req);
         JSONObject result = new JSONObject(convertToString(response.getEntity().getContent()));
-        return null;
+        return result;
     }
 
     private JSONObject OAuthPost(String url) throws OAuthMessageSignerException,
@@ -149,20 +149,20 @@ public class Tumblr {
         this.blog = blog;
     }
 
-    public JSONObject getInfo() throws NoBlogSetException, ClientProtocolException, IOException,
+    public JSONObject getInfo() throws NoBlogException, ClientProtocolException, IOException,
             IllegalStateException, JSONException {
         if (blog == null) {
-            throw new NoBlogSetException();
+            throw new NoBlogException();
         }
         String url = BASE_URL + "/blog/" + blog + "/info" + "?api_key=" + oauth_key;
         JSONObject result = APIKeyGet(url);
         return result;
     }
 
-    public JSONObject getAvatar() throws NoBlogSetException, ClientProtocolException,
+    public JSONObject getAvatar() throws NoBlogException, ClientProtocolException,
             IllegalStateException, IOException, JSONException {
         if (blog == null) {
-            throw new NoBlogSetException();
+            throw new NoBlogException();
         }
         String url = BASE_URL + "/blog/" + blog + "/avatar";
         System.out.println(url);
@@ -170,13 +170,23 @@ public class Tumblr {
         return result;
     }
 
-    public JSONObject getAvatar(int size) throws NoBlogSetException, ClientProtocolException,
+    public JSONObject getAvatar(int size) throws NoBlogException, ClientProtocolException,
             IllegalStateException, IOException, JSONException {
         if (blog == null) {
-            throw new NoBlogSetException();
+            throw new NoBlogException();
         }
         String url = BASE_URL + "/blog/" + blog + "/avatar/" + size;
         JSONObject result = Get(url);
+        return result;
+    }
+    
+    public JSONObject getFollowers() throws NoBlogException, OAuthMessageSignerException,
+            OAuthExpectationFailedException, OAuthCommunicationException, ClientProtocolException, IllegalStateException, IOException, JSONException {
+        if (blog == null) {
+            throw new NoBlogException();
+        }
+        String url = BASE_URL + "/blog/" + blog + "/followers";
+        JSONObject result = OAuthGet(url);
         return result;
     }
 }
