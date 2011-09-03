@@ -280,24 +280,17 @@ public class Tumblr {
         return result;
     }
 
-    public JSONObject getUserInfo() throws NoBlogException, OAuthMessageSignerException,
+    public JSONObject getUserInfo() throws OAuthMessageSignerException,
             OAuthExpectationFailedException, OAuthCommunicationException, ClientProtocolException,
             IllegalStateException, IOException, JSONException {
-        if (blog == null) {
-            throw new NoBlogException();
-        }
         String url = BASE_URL + "/user/info";
         JSONObject result = OAuthPost(url);
         return result;
     }
 
-    public JSONObject getDashboard(boolean notes) throws NoBlogException,
-            OAuthMessageSignerException, OAuthExpectationFailedException,
-            OAuthCommunicationException, ClientProtocolException, IllegalStateException,
-            IOException, JSONException {
-        if (blog == null) {
-            throw new NoBlogException();
-        }
+    public JSONObject getDashboard(boolean notes) throws OAuthMessageSignerException,
+            OAuthExpectationFailedException, OAuthCommunicationException, ClientProtocolException,
+            IllegalStateException, IOException, JSONException {
         String url = BASE_URL + "/user/dashboard";
         if (notes) {
             url += "?notes_info";
@@ -306,13 +299,9 @@ public class Tumblr {
         return result;
     }
 
-    public JSONObject getDashboard(boolean notes, int offset) throws NoBlogException,
-            OAuthMessageSignerException, OAuthExpectationFailedException,
-            OAuthCommunicationException, ClientProtocolException, IllegalStateException,
-            IOException, JSONException {
-        if (blog == null) {
-            throw new NoBlogException();
-        }
+    public JSONObject getDashboard(boolean notes, int offset) throws OAuthMessageSignerException,
+            OAuthExpectationFailedException, OAuthCommunicationException, ClientProtocolException,
+            IllegalStateException, IOException, JSONException {
         String url = BASE_URL + "/user/dashboard?offset=" + offset;
         if (notes) {
             url += "&notes_info";
@@ -321,34 +310,36 @@ public class Tumblr {
         return result;
     }
 
-    public JSONObject getLikes() throws NoBlogException, OAuthMessageSignerException,
+    public JSONObject getLikes() throws OAuthMessageSignerException,
             OAuthExpectationFailedException, OAuthCommunicationException, ClientProtocolException,
             IllegalStateException, IOException, JSONException {
-        if (blog == null) {
-            throw new NoBlogException();
-        }
         String url = BASE_URL + "/user/likes";
         JSONObject result = OAuthGet(url);
         return result;
     }
 
-    public JSONObject getLikes(int offset) throws NoBlogException, OAuthMessageSignerException,
+    public JSONObject getLikes(int offset) throws OAuthMessageSignerException,
             OAuthExpectationFailedException, OAuthCommunicationException, ClientProtocolException,
             IllegalStateException, IOException, JSONException {
-        if (blog == null) {
-            throw new NoBlogException();
-        }
         String url = BASE_URL + "/user/likes?offset=" + offset;
         JSONObject result = OAuthGet(url);
         return result;
     }
 
-    public JSONObject getFollowing() {
-
+    public JSONObject getFollowing() throws OAuthMessageSignerException,
+            OAuthExpectationFailedException, OAuthCommunicationException, ClientProtocolException,
+            IllegalStateException, IOException, JSONException {
+        String url = BASE_URL + "/user/following";
+        JSONObject result = OAuthGet(url);
+        return result;
     }
 
-    public JSONObject getFollowing(int offset) {
-
+    public JSONObject getFollowing(int offset) throws OAuthMessageSignerException,
+            OAuthExpectationFailedException, OAuthCommunicationException, ClientProtocolException,
+            IllegalStateException, IOException, JSONException {
+        String url = BASE_URL + "/user/following?offset=" + offset;
+        JSONObject result = OAuthGet(url);
+        return result;
     }
 
     public JSONObject follow(String url) {
