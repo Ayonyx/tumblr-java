@@ -58,7 +58,6 @@ abstract class Post {
         HttpPost request = new HttpPost(POST_URL);
         request.setEntity(entity);
         HttpResponse response = httpclient.execute(request);
-        System.out.println(convertToString(response.getEntity().getContent()));
         return response.getStatusLine().getStatusCode();
     }
 
