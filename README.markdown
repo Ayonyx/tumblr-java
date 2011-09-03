@@ -16,3 +16,7 @@ Example use:
     post.setBody("Fnord");
     int result = post.postToTumblr();
 
+    Tumblr tumblr = new Tumblr("oauth_consumer_key", "oauth_secret_key");
+    // Set user credentials for xauth
+    tumblr.setCredentials("email@provider.com", "password");
+    JSONObject json = tumblr.getDashboard();
