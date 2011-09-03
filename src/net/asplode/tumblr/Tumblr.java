@@ -34,7 +34,6 @@ public class Tumblr {
     private ArrayList<BasicNameValuePair> params;
     private ArrayList<BasicNameValuePair> xauth_params;
     private String oauth_key;
-    private String oauth_secret;
     private OAuthConsumer consumer;
     HttpClient client;
 
@@ -42,7 +41,6 @@ public class Tumblr {
         this.params = new ArrayList<BasicNameValuePair>();
         this.xauth_params = new ArrayList<BasicNameValuePair>();
         this.oauth_key = oauth_key;
-        this.oauth_secret = oauth_secret;
         consumer = new CommonsHttpOAuthConsumer(oauth_key, oauth_secret);
         consumer.setMessageSigner(new HmacSha1MessageSigner());
         client = new DefaultHttpClient();
