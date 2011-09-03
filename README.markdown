@@ -9,11 +9,9 @@ Notes:
  * TODO: Add javadoc for all methods.
 
 Example use:
-`
-TextPost post = new TextPost();
-post.setCredentials("email@provider.com", "password");
-post.setTitle("Hello World!");
-post.setBody("Fnord");
-int result = post.postToTumblr();
-`
+    TextPost post = new TextPost();
+    post.setCredentials("email@provider.com", "password");
+    post.setTitle("Hello World!");
+    post.setBody("Fnord");
+    int result = post.postToTumblr();
 
