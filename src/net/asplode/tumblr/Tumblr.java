@@ -149,7 +149,7 @@ public class Tumblr {
         this.blog = blog;
     }
 
-    public JSONObject getInfo() throws NoBlogException, ClientProtocolException, IOException,
+    public JSONObject getBlogInfo() throws NoBlogException, ClientProtocolException, IOException,
             IllegalStateException, JSONException {
         if (blog == null) {
             throw new NoBlogException();
