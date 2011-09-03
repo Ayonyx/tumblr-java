@@ -342,12 +342,22 @@ public class Tumblr {
         return result;
     }
 
-    public JSONObject follow(String url) {
-
+    public JSONObject follow(String blogURL) throws OAuthMessageSignerException,
+            OAuthExpectationFailedException, OAuthCommunicationException, ClientProtocolException,
+            IllegalStateException, IOException, JSONException {
+        String url = BASE_URL + "/user/follow";
+        params.add(new BasicNameValuePair("url", blogURL));
+        JSONObject result = OAuthPost(url);
+        return result;
     }
 
-    public JSONObject unfollow(String url) {
-
+    public JSONObject unfollow(String blogURL) throws OAuthMessageSignerException,
+            OAuthExpectationFailedException, OAuthCommunicationException, ClientProtocolException,
+            IllegalStateException, IOException, JSONException {
+        String url = BASE_URL + "/user/unfollow";
+        params.add(new BasicNameValuePair("url", blogURL));
+        JSONObject result = OAuthPost(url);
+        return result;
     }
 
 }
