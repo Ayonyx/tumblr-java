@@ -191,20 +191,44 @@ public class Tumblr {
         return result;
     }
 
-    public JSONObject getPosts() {
-
+    public JSONObject getPosts(boolean notes) throws NoBlogException, ClientProtocolException,
+            IllegalStateException, IOException, JSONException {
+        if (blog == null) {
+            throw new NoBlogException();
+        }
+        String url = BASE_URL + "/blog/" + blog + "/posts?api_key=" + oauth_key;
+        if (notes) {
+            url += "&notes_info";
+        }
+        JSONObject result = APIKeyGet(url);
+        return result;
     }
 
-    public JSONObject getPosts(int offset) {
-
+    public JSONObject getPosts(boolean notes, int offset) throws NoBlogException,
+            ClientProtocolException, IllegalStateException, IOException, JSONException {
+        if (blog == null) {
+            throw new NoBlogException();
+        }
+        String url = BASE_URL + "/blog/" + blog + "/posts?api_key=" + oauth_key + "&offset="
+                + offset;
+        if (notes) {
+            url += "&notes_info";
+        }
+        JSONObject result = APIKeyGet(url);
+        return result;
     }
 
-    public JSONObject getPosts(boolean notes) {
-
-    }
-
-    public JSONObject getPost(String postid) {
-
+    public JSONObject getPost(long postid, boolean notes) throws NoBlogException, ClientProtocolException,
+            IllegalStateException, IOException, JSONException {
+        if (blog == null) {
+            throw new NoBlogException();
+        }
+        String url = BASE_URL + "/blog/" + blog + "/posts?api_key=" + oauth_key + "&id=" + postid;
+        if (notes) {
+            url += "&notes_info";
+        }
+        JSONObject result = APIKeyGet(url);
+        return result;
     }
 
     public JSONObject getQueue() {
