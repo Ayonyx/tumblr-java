@@ -179,9 +179,10 @@ public class Tumblr {
         JSONObject result = Get(url);
         return result;
     }
-    
+
     public JSONObject getFollowers() throws NoBlogException, OAuthMessageSignerException,
-            OAuthExpectationFailedException, OAuthCommunicationException, ClientProtocolException, IllegalStateException, IOException, JSONException {
+            OAuthExpectationFailedException, OAuthCommunicationException, ClientProtocolException,
+            IllegalStateException, IOException, JSONException {
         if (blog == null) {
             throw new NoBlogException();
         }
@@ -189,4 +190,81 @@ public class Tumblr {
         JSONObject result = OAuthGet(url);
         return result;
     }
+
+    public JSONObject getPosts() {
+
+    }
+
+    public JSONObject getPosts(int offset) {
+
+    }
+
+    public JSONObject getPosts(boolean notes) {
+
+    }
+
+    public JSONObject getPost(String postid) {
+
+    }
+
+    public JSONObject getQueue() {
+
+    }
+
+    public JSONObject getDrafts() {
+
+    }
+
+    public JSONObject reblogPost(String id, String key, String comment) {
+
+    }
+
+    public JSONObject deletePost(String id) {
+
+    }
+
+    public JSONObject getUserInfo() {
+
+    }
+
+    public JSONObject getDashboard() {
+
+    }
+
+    public JSONObject getDashboard(int offset) {
+
+    }
+
+    public JSONObject getDashboard(boolean notes) {
+
+    }
+
+    public JSONObject getDashboard(int offset, boolean notes) {
+
+    }
+
+    public JSONObject getLikes() {
+
+    }
+
+    public JSONObject getLikes(int offset) {
+
+    }
+
+    public JSONObject getFollowing() {
+
+    }
+
+    public JSONObject getFollowing(int offset) {
+
+    }
+
+    public JSONObject follow(String url) {
+
+    }
+
+    public JSONObject unfollow(String url) {
+
+    }
+
 }
