@@ -32,6 +32,7 @@ public class Tumblr {
     private String password;
     private String blog;
     private ArrayList<BasicNameValuePair> params;
+    private ArrayList<BasicNameValuePair> xauth_params;
     private String oauth_key;
     private String oauth_secret;
     private OAuthConsumer consumer;
@@ -39,6 +40,7 @@ public class Tumblr {
 
     public Tumblr(String oauth_key, String oauth_secret) {
         this.params = new ArrayList<BasicNameValuePair>();
+        this.xauth_params = new ArrayList<BasicNameValuePair>();
         this.oauth_key = oauth_key;
         this.oauth_secret = oauth_secret;
         consumer = new CommonsHttpOAuthConsumer(oauth_key, oauth_secret);
@@ -58,15 +60,14 @@ public class Tumblr {
     private String[] getOAuthTokens() throws OAuthMessageSignerException,
             OAuthExpectationFailedException, OAuthCommunicationException, ClientProtocolException,
             IOException {
-        params.add(new BasicNameValuePair("x_auth_mode", "client_auth"));
-        params.add(new BasicNameValuePair("x_auth_username", email));
-        params.add(new BasicNameValuePair("x_auth_password", password));
+        xauth_params.add(new BasicNameValuePair("x_auth_mode", "client_auth"));
+        xauth_params.add(new BasicNameValuePair("x_auth_username", email));
+        xauth_params.add(new BasicNameValuePair("x_auth_password", password));
         HttpPost post = new HttpPost("https://www.tumblr.com/oauth/access_token");
         try {
-            UrlEncodedFormEntity entity = new UrlEncodedFormEntity(params, "UTF-8");
+            UrlEncodedFormEntity entity = new UrlEncodedFormEntity(xauth_params);
             post.setEntity(entity);
             consumer.sign(post);
-            params.clear();
             HttpResponse response = client.execute(post);
             String s = convertToString(response.getEntity().getContent());
             String[] tokens = s.split("&");
@@ -75,7 +76,6 @@ public class Tumblr {
             result[1] = tokens[1].split("=")[1];
             return result;
         } catch (UnsupportedEncodingException e) {
-            params.clear();
         }
         return null;
     }
@@ -218,8 +218,8 @@ public class Tumblr {
         return result;
     }
 
-    public JSONObject getPost(long postid, boolean notes) throws NoBlogException, ClientProtocolException,
-            IllegalStateException, IOException, JSONException {
+    public JSONObject getPost(String postid, boolean notes) throws NoBlogException,
+            ClientProtocolException, IllegalStateException, IOException, JSONException {
         if (blog == null) {
             throw new NoBlogException();
         }
@@ -231,16 +231,41 @@ public class Tumblr {
         return result;
     }
 
-    public JSONObject getQueue() {
-
+    public JSONObject getQueue() throws NoBlogException, OAuthMessageSignerException,
+            OAuthExpectationFailedException, OAuthCommunicationException, ClientProtocolException,
+            IllegalStateException, IOException, JSONException {
+        if (blog == null) {
+            throw new NoBlogException();
+        }
+        String url = BASE_URL + "/blog/" + blog + "/posts/queue";
+        JSONObject result = OAuthGet(url);
+        return result;
     }
 
-    public JSONObject getDrafts() {
-
+    public JSONObject getDrafts() throws NoBlogException, OAuthMessageSignerException,
+            OAuthExpectationFailedException, OAuthCommunicationException, ClientProtocolException,
+            IllegalStateException, IOException, JSONException {
+        if (blog == null) {
+            throw new NoBlogException();
+        }
+        String url = BASE_URL + "/blog/" + blog + "/posts/draft";
+        JSONObject result = OAuthGet(url);
+        return result;
     }
 
-    public JSONObject reblogPost(String id, String key, String comment) {
-
+    public JSONObject reblogPost(String id, String key, String comment) throws NoBlogException,
+            OAuthMessageSignerException, OAuthExpectationFailedException,
+            OAuthCommunicationException, ClientProtocolException, IllegalStateException,
+            IOException, JSONException {
+        if (blog == null) {
+            throw new NoBlogException();
+        }
+        params.add(new BasicNameValuePair("id", id));
+        params.add(new BasicNameValuePair("reblog_key", key));
+        params.add(new BasicNameValuePair("comment", comment));
+        String url = BASE_URL + "/blog/" + blog + "/post/reblog";
+        JSONObject result = OAuthPost(url);
+        return result;
     }
 
     public JSONObject deletePost(String id) {
