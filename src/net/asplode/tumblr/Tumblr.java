@@ -268,36 +268,79 @@ public class Tumblr {
         return result;
     }
 
-    public JSONObject deletePost(String id) {
-
+    public JSONObject deletePost(String id) throws NoBlogException, OAuthMessageSignerException,
+            OAuthExpectationFailedException, OAuthCommunicationException, ClientProtocolException,
+            IllegalStateException, IOException, JSONException {
+        if (blog == null) {
+            throw new NoBlogException();
+        }
+        params.add(new BasicNameValuePair("id", id));
+        String url = BASE_URL + "/blog/" + blog + "/post/delete";
+        JSONObject result = OAuthPost(url);
+        return result;
     }
 
-    public JSONObject getUserInfo() {
-
+    public JSONObject getUserInfo() throws NoBlogException, OAuthMessageSignerException,
+            OAuthExpectationFailedException, OAuthCommunicationException, ClientProtocolException,
+            IllegalStateException, IOException, JSONException {
+        if (blog == null) {
+            throw new NoBlogException();
+        }
+        String url = BASE_URL + "/user/info";
+        JSONObject result = OAuthPost(url);
+        return result;
     }
 
-    public JSONObject getDashboard() {
-
+    public JSONObject getDashboard(boolean notes) throws NoBlogException,
+            OAuthMessageSignerException, OAuthExpectationFailedException,
+            OAuthCommunicationException, ClientProtocolException, IllegalStateException,
+            IOException, JSONException {
+        if (blog == null) {
+            throw new NoBlogException();
+        }
+        String url = BASE_URL + "/user/dashboard";
+        if (notes) {
+            url += "?notes_info";
+        }
+        JSONObject result = OAuthGet(url);
+        return result;
     }
 
-    public JSONObject getDashboard(int offset) {
-
+    public JSONObject getDashboard(boolean notes, int offset) throws NoBlogException,
+            OAuthMessageSignerException, OAuthExpectationFailedException,
+            OAuthCommunicationException, ClientProtocolException, IllegalStateException,
+            IOException, JSONException {
+        if (blog == null) {
+            throw new NoBlogException();
+        }
+        String url = BASE_URL + "/user/dashboard?offset=" + offset;
+        if (notes) {
+            url += "&notes_info";
+        }
+        JSONObject result = OAuthGet(url);
+        return result;
     }
 
-    public JSONObject getDashboard(boolean notes) {
-
+    public JSONObject getLikes() throws NoBlogException, OAuthMessageSignerException,
+            OAuthExpectationFailedException, OAuthCommunicationException, ClientProtocolException,
+            IllegalStateException, IOException, JSONException {
+        if (blog == null) {
+            throw new NoBlogException();
+        }
+        String url = BASE_URL + "/user/likes";
+        JSONObject result = OAuthGet(url);
+        return result;
     }
 
-    public JSONObject getDashboard(int offset, boolean notes) {
-
-    }
-
-    public JSONObject getLikes() {
-
-    }
-
-    public JSONObject getLikes(int offset) {
-
+    public JSONObject getLikes(int offset) throws NoBlogException, OAuthMessageSignerException,
+            OAuthExpectationFailedException, OAuthCommunicationException, ClientProtocolException,
+            IllegalStateException, IOException, JSONException {
+        if (blog == null) {
+            throw new NoBlogException();
+        }
+        String url = BASE_URL + "/user/likes?offset=" + offset;
+        JSONObject result = OAuthGet(url);
+        return result;
     }
 
     public JSONObject getFollowing() {
