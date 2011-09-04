@@ -30,10 +30,18 @@ public class AudioPost extends Post {
         }
     }
 
+    /**
+     * @param caption Post caption
+     * @throws UnsupportedEncodingException
+     */
     public void setCaption(String caption) throws UnsupportedEncodingException {
         entity.addPart("caption", new StringBody(caption));
     }
 
+    /**
+     * @param audio Audio file
+     * @throws UnsupportedEncodingException
+     */
     public void setSourceFile(File audio) throws UnsupportedEncodingException {
         entity.addPart("data", new FileBody(audio));
     }

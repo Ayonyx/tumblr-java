@@ -52,6 +52,10 @@ public class Tumblr {
     private OAuthConsumer consumer;
     HttpClient client;
 
+    /**
+     * @param oauth_key OAuth key.
+     * @param oauth_secret OAuth secret key.
+     */
     public Tumblr(String oauth_key, String oauth_secret) {
         this.params = new ArrayList<BasicNameValuePair>();
         this.xauth_params = new ArrayList<BasicNameValuePair>();
@@ -150,11 +154,18 @@ public class Tumblr {
         return result;
     }
 
+    /**
+     * @param email Email address
+     * @param password Password
+     */
     public void setCredentials(String email, String password) {
         this.email = email;
         this.password = password;
     }
 
+    /**
+     * @param blog Blog url
+     */
     public void setBlog(String blog) {
         if (!blog.endsWith("tumblr.com")) {
             blog += ".tumblr.com";
@@ -162,6 +173,14 @@ public class Tumblr {
         this.blog = blog;
     }
 
+    /**
+     * @return Blog info
+     * @throws NoBlogException
+     * @throws ClientProtocolException
+     * @throws IOException
+     * @throws IllegalStateException
+     * @throws JSONException
+     */
     public JSONObject getBlogInfo() throws NoBlogException, ClientProtocolException, IOException,
             IllegalStateException, JSONException {
         if (blog == null) {
@@ -172,6 +191,14 @@ public class Tumblr {
         return result;
     }
 
+    /**
+     * @return Blog avatar, 64x64
+     * @throws NoBlogException
+     * @throws ClientProtocolException
+     * @throws IllegalStateException
+     * @throws IOException
+     * @throws JSONException
+     */
     public JSONObject getAvatar() throws NoBlogException, ClientProtocolException,
             IllegalStateException, IOException, JSONException {
         if (blog == null) {
@@ -183,6 +210,15 @@ public class Tumblr {
         return result;
     }
 
+    /**
+     * @param size Size of avatar. 16, 24, 30, 40, 48, 64, 96, 128, 512.
+     * @return Avatar of requested size.
+     * @throws NoBlogException
+     * @throws ClientProtocolException
+     * @throws IllegalStateException
+     * @throws IOException
+     * @throws JSONException
+     */
     public JSONObject getAvatar(int size) throws NoBlogException, ClientProtocolException,
             IllegalStateException, IOException, JSONException {
         if (blog == null) {
@@ -193,6 +229,17 @@ public class Tumblr {
         return result;
     }
 
+    /**
+     * @return Followers
+     * @throws NoBlogException
+     * @throws OAuthMessageSignerException
+     * @throws OAuthExpectationFailedException
+     * @throws OAuthCommunicationException
+     * @throws ClientProtocolException
+     * @throws IllegalStateException
+     * @throws IOException
+     * @throws JSONException
+     */
     public JSONObject getFollowers() throws NoBlogException, OAuthMessageSignerException,
             OAuthExpectationFailedException, OAuthCommunicationException, ClientProtocolException,
             IllegalStateException, IOException, JSONException {
@@ -204,6 +251,15 @@ public class Tumblr {
         return result;
     }
 
+    /**
+     * @param notes Include note count and note metadata
+     * @return Posts
+     * @throws NoBlogException
+     * @throws ClientProtocolException
+     * @throws IllegalStateException
+     * @throws IOException
+     * @throws JSONException
+     */
     public JSONObject getPosts(boolean notes) throws NoBlogException, ClientProtocolException,
             IllegalStateException, IOException, JSONException {
         if (blog == null) {
@@ -217,6 +273,16 @@ public class Tumblr {
         return result;
     }
 
+    /**
+     * @param notes Include note count and note metadata
+     * @param offset Post number to start at
+     * @return Posts
+     * @throws NoBlogException
+     * @throws ClientProtocolException
+     * @throws IllegalStateException
+     * @throws IOException
+     * @throws JSONException
+     */
     public JSONObject getPosts(boolean notes, int offset) throws NoBlogException,
             ClientProtocolException, IllegalStateException, IOException, JSONException {
         if (blog == null) {
@@ -231,6 +297,16 @@ public class Tumblr {
         return result;
     }
 
+    /**
+     * @param postid Post ID
+     * @param notes Include note count and note metadata
+     * @return Specific post
+     * @throws NoBlogException
+     * @throws ClientProtocolException
+     * @throws IllegalStateException
+     * @throws IOException
+     * @throws JSONException
+     */
     public JSONObject getPost(String postid, boolean notes) throws NoBlogException,
             ClientProtocolException, IllegalStateException, IOException, JSONException {
         if (blog == null) {
@@ -244,6 +320,17 @@ public class Tumblr {
         return result;
     }
 
+    /**
+     * @return Posts in the queue
+     * @throws NoBlogException
+     * @throws OAuthMessageSignerException
+     * @throws OAuthExpectationFailedException
+     * @throws OAuthCommunicationException
+     * @throws ClientProtocolException
+     * @throws IllegalStateException
+     * @throws IOException
+     * @throws JSONException
+     */
     public JSONObject getQueue() throws NoBlogException, OAuthMessageSignerException,
             OAuthExpectationFailedException, OAuthCommunicationException, ClientProtocolException,
             IllegalStateException, IOException, JSONException {
@@ -255,6 +342,17 @@ public class Tumblr {
         return result;
     }
 
+    /**
+     * @return Draft posts
+     * @throws NoBlogException
+     * @throws OAuthMessageSignerException
+     * @throws OAuthExpectationFailedException
+     * @throws OAuthCommunicationException
+     * @throws ClientProtocolException
+     * @throws IllegalStateException
+     * @throws IOException
+     * @throws JSONException
+     */
     public JSONObject getDrafts() throws NoBlogException, OAuthMessageSignerException,
             OAuthExpectationFailedException, OAuthCommunicationException, ClientProtocolException,
             IllegalStateException, IOException, JSONException {
@@ -266,6 +364,20 @@ public class Tumblr {
         return result;
     }
 
+    /**
+     * @param id Post ID to reblog
+     * @param key Reblog key of the post to be reblogged
+     * @param comment Comment to include with the reblog 
+     * @return Status of the request
+     * @throws NoBlogException
+     * @throws OAuthMessageSignerException
+     * @throws OAuthExpectationFailedException
+     * @throws OAuthCommunicationException
+     * @throws ClientProtocolException
+     * @throws IllegalStateException
+     * @throws IOException
+     * @throws JSONException
+     */
     public JSONObject reblogPost(String id, String key, String comment) throws NoBlogException,
             OAuthMessageSignerException, OAuthExpectationFailedException,
             OAuthCommunicationException, ClientProtocolException, IllegalStateException,
@@ -281,6 +393,18 @@ public class Tumblr {
         return result;
     }
 
+    /**
+     * @param id Post ID to delete.
+     * @return Status of the request
+     * @throws NoBlogException
+     * @throws OAuthMessageSignerException
+     * @throws OAuthExpectationFailedException
+     * @throws OAuthCommunicationException
+     * @throws ClientProtocolException
+     * @throws IllegalStateException
+     * @throws IOException
+     * @throws JSONException
+     */
     public JSONObject deletePost(String id) throws NoBlogException, OAuthMessageSignerException,
             OAuthExpectationFailedException, OAuthCommunicationException, ClientProtocolException,
             IllegalStateException, IOException, JSONException {
@@ -293,6 +417,16 @@ public class Tumblr {
         return result;
     }
 
+    /**
+     * @return User info
+     * @throws OAuthMessageSignerException
+     * @throws OAuthExpectationFailedException
+     * @throws OAuthCommunicationException
+     * @throws ClientProtocolException
+     * @throws IllegalStateException
+     * @throws IOException
+     * @throws JSONException
+     */
     public JSONObject getUserInfo() throws OAuthMessageSignerException,
             OAuthExpectationFailedException, OAuthCommunicationException, ClientProtocolException,
             IllegalStateException, IOException, JSONException {
@@ -301,6 +435,17 @@ public class Tumblr {
         return result;
     }
 
+    /**
+     * @param notes Include note count and note metadata
+     * @return Dashboard
+     * @throws OAuthMessageSignerException
+     * @throws OAuthExpectationFailedException
+     * @throws OAuthCommunicationException
+     * @throws ClientProtocolException
+     * @throws IllegalStateException
+     * @throws IOException
+     * @throws JSONException
+     */
     public JSONObject getDashboard(boolean notes) throws OAuthMessageSignerException,
             OAuthExpectationFailedException, OAuthCommunicationException, ClientProtocolException,
             IllegalStateException, IOException, JSONException {
@@ -312,6 +457,18 @@ public class Tumblr {
         return result;
     }
 
+    /**
+     * @param notes Include note count and note metadata
+     * @param offset Post number to start at. 
+     * @return Dashboard
+     * @throws OAuthMessageSignerException
+     * @throws OAuthExpectationFailedException
+     * @throws OAuthCommunicationException
+     * @throws ClientProtocolException
+     * @throws IllegalStateException
+     * @throws IOException
+     * @throws JSONException
+     */
     public JSONObject getDashboard(boolean notes, int offset) throws OAuthMessageSignerException,
             OAuthExpectationFailedException, OAuthCommunicationException, ClientProtocolException,
             IllegalStateException, IOException, JSONException {
@@ -323,6 +480,16 @@ public class Tumblr {
         return result;
     }
 
+    /**
+     * @return Liked posts
+     * @throws OAuthMessageSignerException
+     * @throws OAuthExpectationFailedException
+     * @throws OAuthCommunicationException
+     * @throws ClientProtocolException
+     * @throws IllegalStateException
+     * @throws IOException
+     * @throws JSONException
+     */
     public JSONObject getLikes() throws OAuthMessageSignerException,
             OAuthExpectationFailedException, OAuthCommunicationException, ClientProtocolException,
             IllegalStateException, IOException, JSONException {
@@ -331,6 +498,17 @@ public class Tumblr {
         return result;
     }
 
+    /**
+     * @param offset Post number to start at
+     * @return Liked posts
+     * @throws OAuthMessageSignerException
+     * @throws OAuthExpectationFailedException
+     * @throws OAuthCommunicationException
+     * @throws ClientProtocolException
+     * @throws IllegalStateException
+     * @throws IOException
+     * @throws JSONException
+     */
     public JSONObject getLikes(int offset) throws OAuthMessageSignerException,
             OAuthExpectationFailedException, OAuthCommunicationException, ClientProtocolException,
             IllegalStateException, IOException, JSONException {
@@ -339,6 +517,16 @@ public class Tumblr {
         return result;
     }
 
+    /**
+     * @return Blogs the user is following
+     * @throws OAuthMessageSignerException
+     * @throws OAuthExpectationFailedException
+     * @throws OAuthCommunicationException
+     * @throws ClientProtocolException
+     * @throws IllegalStateException
+     * @throws IOException
+     * @throws JSONException
+     */
     public JSONObject getFollowing() throws OAuthMessageSignerException,
             OAuthExpectationFailedException, OAuthCommunicationException, ClientProtocolException,
             IllegalStateException, IOException, JSONException {
@@ -347,6 +535,17 @@ public class Tumblr {
         return result;
     }
 
+    /**
+     * @param offset Post number to start at
+     * @return Blogs the user is following
+     * @throws OAuthMessageSignerException
+     * @throws OAuthExpectationFailedException
+     * @throws OAuthCommunicationException
+     * @throws ClientProtocolException
+     * @throws IllegalStateException
+     * @throws IOException
+     * @throws JSONException
+     */
     public JSONObject getFollowing(int offset) throws OAuthMessageSignerException,
             OAuthExpectationFailedException, OAuthCommunicationException, ClientProtocolException,
             IllegalStateException, IOException, JSONException {
@@ -355,6 +554,17 @@ public class Tumblr {
         return result;
     }
 
+    /**
+     * @param blogURL URL of the blog to follow
+     * @return Status of the request
+     * @throws OAuthMessageSignerException
+     * @throws OAuthExpectationFailedException
+     * @throws OAuthCommunicationException
+     * @throws ClientProtocolException
+     * @throws IllegalStateException
+     * @throws IOException
+     * @throws JSONException
+     */
     public JSONObject follow(String blogURL) throws OAuthMessageSignerException,
             OAuthExpectationFailedException, OAuthCommunicationException, ClientProtocolException,
             IllegalStateException, IOException, JSONException {
@@ -364,6 +574,17 @@ public class Tumblr {
         return result;
     }
 
+    /**
+     * @param blogURL URL of the blog to unfollow
+     * @return Status of the request
+     * @throws OAuthMessageSignerException
+     * @throws OAuthExpectationFailedException
+     * @throws OAuthCommunicationException
+     * @throws ClientProtocolException
+     * @throws IllegalStateException
+     * @throws IOException
+     * @throws JSONException
+     */
     public JSONObject unfollow(String blogURL) throws OAuthMessageSignerException,
             OAuthExpectationFailedException, OAuthCommunicationException, ClientProtocolException,
             IllegalStateException, IOException, JSONException {

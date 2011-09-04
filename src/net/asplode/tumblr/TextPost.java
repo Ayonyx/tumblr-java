@@ -29,10 +29,18 @@ public class TextPost extends Post {
         }
     }
 
+    /**
+     * @param title Post title
+     * @throws UnsupportedEncodingException
+     */
     public void setTitle(String title) throws UnsupportedEncodingException {
         entity.addPart("title", new StringBody(title));
     }
 
+    /**
+     * @param body Post body
+     * @throws UnsupportedEncodingException
+     */
     public void setBody(String body) throws UnsupportedEncodingException {
         entity.addPart("body", new StringBody(body));
     }

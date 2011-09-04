@@ -29,10 +29,18 @@ public class QuotePost extends Post {
         }
     }
 
+    /**
+     * @param quote Quote
+     * @throws UnsupportedEncodingException
+     */
     public void setQuote(String quote) throws UnsupportedEncodingException {
         entity.addPart("quote", new StringBody(quote));
     }
 
+    /**
+     * @param source Quote source. Optional, HTML allowed.
+     * @throws UnsupportedEncodingException
+     */
     public void setSource(String source) throws UnsupportedEncodingException {
         entity.addPart("source", new StringBody(source));
     }

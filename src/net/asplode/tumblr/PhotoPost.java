@@ -31,18 +31,34 @@ public class PhotoPost extends Post {
         }
     }
 
+    /**
+     * @param caption Caption. Optional. HTML allowed.
+     * @throws UnsupportedEncodingException
+     */
     public void setCaption(String caption) throws UnsupportedEncodingException {
         entity.addPart("caption", new StringBody(caption));
     }
 
+    /**
+     * @param url Click-through URL.
+     * @throws UnsupportedEncodingException
+     */
     public void setClickThroughURL(String url) throws UnsupportedEncodingException {
         entity.addPart("click-through-url", new StringBody(url));
     }
 
+    /**
+     * @param url Source URL of the image
+     * @throws UnsupportedEncodingException
+     */
     public void setSourceURL(String url) throws UnsupportedEncodingException {
         entity.addPart("source", new StringBody(url));
     }
 
+    /**
+     * @param image Image file
+     * @throws UnsupportedEncodingException
+     */
     public void setSourceFile(File image) throws UnsupportedEncodingException {
         entity.addPart("data", new FileBody(image));
     }

@@ -30,14 +30,26 @@ public class VideoPost extends Post {
         }
     }
 
+    /**
+     * @param caption Caption. Optional. HTML allowed.
+     * @throws UnsupportedEncodingException
+     */
     public void setCaption(String caption) throws UnsupportedEncodingException {
         entity.addPart("caption", new StringBody(caption));
     }
 
+    /**
+     * @param video Video to upload.
+     * @throws UnsupportedEncodingException
+     */
     public void setSourceFile(File video) throws UnsupportedEncodingException {
         entity.addPart("data", new FileBody(video));
     }
 
+    /**
+     * @param embed HTML to embed video or the URL of a YouTube video.
+     * @throws UnsupportedEncodingException
+     */
     public void setEmbedText(String embed) throws UnsupportedEncodingException {
         entity.addPart("embed", new StringBody(embed));
     }

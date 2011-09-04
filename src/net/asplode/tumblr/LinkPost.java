@@ -29,14 +29,26 @@ public class LinkPost extends Post {
         }
     }
 
+    /**
+     * @param url URL
+     * @throws UnsupportedEncodingException
+     */
     public void setURL(String url) throws UnsupportedEncodingException {
         entity.addPart("url", new StringBody(url));
     }
 
+    /**
+     * @param name Link name
+     * @throws UnsupportedEncodingException
+     */
     public void setName(String name) throws UnsupportedEncodingException {
         entity.addPart("name", new StringBody(name));
     }
 
+    /**
+     * @param description Link description
+     * @throws UnsupportedEncodingException
+     */
     public void setDescription(String description) throws UnsupportedEncodingException {
         entity.addPart("description", new StringBody(description));
     }

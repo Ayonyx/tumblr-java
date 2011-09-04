@@ -27,6 +27,7 @@ import org.apache.http.entity.mime.MultipartEntity;
 import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.DefaultHttpClient;
 
+
 abstract class Post {
 
     enum State {
@@ -51,6 +52,12 @@ abstract class Post {
         entity = new MultipartEntity();
     }
 
+    /**
+     * @return HTTP status code
+     * @throws NoCredentialsException
+     * @throws ClientProtocolException
+     * @throws IOException
+     */
     public int postToTumblr() throws NoCredentialsException, ClientProtocolException, IOException {
         if (email == null || password == null) {
             throw new NoCredentialsException();
@@ -63,6 +70,14 @@ abstract class Post {
         return response.getStatusLine().getStatusCode();
     }
 
+    /**
+     * @param postId
+     *            The id of the post to be modified.
+     * @return HTTP status code
+     * @throws NoCredentialsException
+     * @throws ClientProtocolException
+     * @throws IOException
+     */
     public int postToTumblr(String postId) throws NoCredentialsException, ClientProtocolException,
             IOException {
         if (email == null || password == null) {
@@ -76,6 +91,11 @@ abstract class Post {
         return response.getStatusLine().getStatusCode();
     }
 
+    /**
+     * @param blog
+     *            The blog to post to.
+     * @throws UnsupportedEncodingException
+     */
     public void setBlog(String blog) throws UnsupportedEncodingException {
         if (!blog.endsWith(".tumblr.com")) {
             blog += ".tumblr.com";
@@ -83,6 +103,13 @@ abstract class Post {
         entity.addPart("group", new StringBody(blog));
     }
 
+    /**
+     * @param email
+     *            Email address
+     * @param password
+     *            Password
+     * @throws UnsupportedEncodingException
+     */
     public void setCredentials(String email, String password) throws UnsupportedEncodingException {
         this.email = email;
         this.password = password;
@@ -90,22 +117,53 @@ abstract class Post {
         entity.addPart("password", new StringBody(password));
     }
 
+    /**
+     * @param date
+     *            Publish date and time for queued posts
+     * @throws UnsupportedEncodingException
+     */
     public void setPublishOn(String date) throws UnsupportedEncodingException {
         entity.addPart("publish-on", new StringBody(date));
     }
 
+    /**
+     * @param slug
+     *            Custom string to appear in the post's URL
+     * @throws UnsupportedEncodingException
+     */
     public void setSlug(String slug) throws UnsupportedEncodingException {
         entity.addPart("slug", new StringBody(slug));
     }
 
+    /**
+     * @param state
+     *            Post state.
+     * @see State
+     * @throws UnsupportedEncodingException
+     */
     public void setState(State state) throws UnsupportedEncodingException {
         entity.addPart("state", new StringBody(state.getState()));
     }
 
+    /**
+     * @param tags
+     *            Comma-separated list of post tags
+     * @throws UnsupportedEncodingException
+     */
     public void setTags(String tags) throws UnsupportedEncodingException {
         entity.addPart("tags", new StringBody(tags));
     }
 
+    /**
+     * @param twitter
+     *            One of the following values: <br>
+     *            "no" - Do not send post to twitter.<br>
+     *            "auto" - Send to Twitter with an automatically generated
+     *            summary of the post.<br>
+     *            Any other value - A custom message to send to Twitter for this
+     *            post.
+     * @throws UnsupportedEncodingException
+     */
     public void setTwitter(String twitter) throws UnsupportedEncodingException {
         entity.addPart("send-to-twitter", new StringBody(twitter));
     }

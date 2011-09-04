@@ -29,10 +29,18 @@ public class ConversationPost extends Post {
         }
     }
 
+    /**
+     * @param title Conversation title
+     * @throws UnsupportedEncodingException
+     */
     public void setTitle(String title) throws UnsupportedEncodingException {
         entity.addPart("title", new StringBody(title));
     }
 
+    /**
+     * @param conversation Conversation
+     * @throws UnsupportedEncodingException
+     */
     public void setConversation(String conversation) throws UnsupportedEncodingException {
         entity.addPart("conversation", new StringBody(conversation));
     }
