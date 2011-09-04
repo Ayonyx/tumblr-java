@@ -20,3 +20,6 @@ Example use:
     // Set user credentials for xauth
     tumblr.setCredentials("email@provider.com", "password");
     JSONObject json = tumblr.getDashboard();
+
+
+tumblr-java is licensed under the Apache 2.0 license
