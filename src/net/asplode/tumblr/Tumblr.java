@@ -53,8 +53,10 @@ public class Tumblr {
     HttpClient client;
 
     /**
-     * @param oauth_key OAuth key.
-     * @param oauth_secret OAuth secret key.
+     * @param oauth_key
+     *            OAuth key.
+     * @param oauth_secret
+     *            OAuth secret key.
      */
     public Tumblr(String oauth_key, String oauth_secret) {
         this.params = new ArrayList<BasicNameValuePair>();
@@ -155,8 +157,10 @@ public class Tumblr {
     }
 
     /**
-     * @param email Email address
-     * @param password Password
+     * @param email
+     *            Email address
+     * @param password
+     *            Password
      */
     public void setCredentials(String email, String password) {
         this.email = email;
@@ -164,12 +168,10 @@ public class Tumblr {
     }
 
     /**
-     * @param blog Blog url
+     * @param blog
+     *            Blog url e.g. "myblog.tumblr.com", "tumblr.mydomain.com"
      */
     public void setBlog(String blog) {
-        if (!blog.endsWith("tumblr.com")) {
-            blog += ".tumblr.com";
-        }
         this.blog = blog;
     }
 
@@ -211,7 +213,8 @@ public class Tumblr {
     }
 
     /**
-     * @param size Size of avatar. 16, 24, 30, 40, 48, 64, 96, 128, 512.
+     * @param size
+     *            Size of avatar. 16, 24, 30, 40, 48, 64, 96, 128, 512.
      * @return Avatar of requested size.
      * @throws NoBlogException
      * @throws ClientProtocolException
@@ -252,7 +255,8 @@ public class Tumblr {
     }
 
     /**
-     * @param notes Include note count and note metadata
+     * @param notes
+     *            Include note count and note metadata
      * @return Posts
      * @throws NoBlogException
      * @throws ClientProtocolException
@@ -274,8 +278,10 @@ public class Tumblr {
     }
 
     /**
-     * @param notes Include note count and note metadata
-     * @param offset Post number to start at
+     * @param notes
+     *            Include note count and note metadata
+     * @param offset
+     *            Post number to start at
      * @return Posts
      * @throws NoBlogException
      * @throws ClientProtocolException
@@ -298,8 +304,10 @@ public class Tumblr {
     }
 
     /**
-     * @param postid Post ID
-     * @param notes Include note count and note metadata
+     * @param postid
+     *            Post ID
+     * @param notes
+     *            Include note count and note metadata
      * @return Specific post
      * @throws NoBlogException
      * @throws ClientProtocolException
@@ -365,9 +373,12 @@ public class Tumblr {
     }
 
     /**
-     * @param id Post ID to reblog
-     * @param key Reblog key of the post to be reblogged
-     * @param comment Comment to include with the reblog 
+     * @param id
+     *            Post ID to reblog
+     * @param key
+     *            Reblog key of the post to be reblogged
+     * @param comment
+     *            Comment to include with the reblog
      * @return Status of the request
      * @throws NoBlogException
      * @throws OAuthMessageSignerException
@@ -394,7 +405,8 @@ public class Tumblr {
     }
 
     /**
-     * @param id Post ID to delete.
+     * @param id
+     *            Post ID to delete.
      * @return Status of the request
      * @throws NoBlogException
      * @throws OAuthMessageSignerException
@@ -436,7 +448,8 @@ public class Tumblr {
     }
 
     /**
-     * @param notes Include note count and note metadata
+     * @param notes
+     *            Include note count and note metadata
      * @return Dashboard
      * @throws OAuthMessageSignerException
      * @throws OAuthExpectationFailedException
@@ -458,8 +471,10 @@ public class Tumblr {
     }
 
     /**
-     * @param notes Include note count and note metadata
-     * @param offset Post number to start at. 
+     * @param notes
+     *            Include note count and note metadata
+     * @param offset
+     *            Post number to start at.
      * @return Dashboard
      * @throws OAuthMessageSignerException
      * @throws OAuthExpectationFailedException
@@ -499,7 +514,8 @@ public class Tumblr {
     }
 
     /**
-     * @param offset Post number to start at
+     * @param offset
+     *            Post number to start at
      * @return Liked posts
      * @throws OAuthMessageSignerException
      * @throws OAuthExpectationFailedException
@@ -536,7 +552,8 @@ public class Tumblr {
     }
 
     /**
-     * @param offset Post number to start at
+     * @param offset
+     *            Post number to start at
      * @return Blogs the user is following
      * @throws OAuthMessageSignerException
      * @throws OAuthExpectationFailedException
@@ -555,7 +572,8 @@ public class Tumblr {
     }
 
     /**
-     * @param blogURL URL of the blog to follow
+     * @param blogURL
+     *            URL of the blog to follow
      * @return Status of the request
      * @throws OAuthMessageSignerException
      * @throws OAuthExpectationFailedException
@@ -575,7 +593,8 @@ public class Tumblr {
     }
 
     /**
-     * @param blogURL URL of the blog to unfollow
+     * @param blogURL
+     *            URL of the blog to unfollow
      * @return Status of the request
      * @throws OAuthMessageSignerException
      * @throws OAuthExpectationFailedException
