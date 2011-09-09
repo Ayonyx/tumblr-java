@@ -97,9 +97,6 @@ abstract class Post {
      * @throws UnsupportedEncodingException
      */
     public void setBlog(String blog) throws UnsupportedEncodingException {
-        if (!blog.endsWith(".tumblr.com")) {
-            blog += ".tumblr.com";
-        }
         entity.addPart("group", new StringBody(blog));
     }
 
