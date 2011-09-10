@@ -27,7 +27,6 @@ import org.apache.http.entity.mime.MultipartEntity;
 import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.DefaultHttpClient;
 
-
 abstract class Post {
 
     enum State {
@@ -50,6 +49,15 @@ abstract class Post {
 
     public Post() {
         entity = new MultipartEntity();
+    }
+
+    private String convertToString(InputStream in) throws IOException {
+        StringBuffer out = new StringBuffer();
+        byte[] b = new byte[4096];
+        for (int n; (n = in.read(b)) != -1;) {
+            out.append(new String(b, 0, n));
+        }
+        return out.toString();
     }
 
     /**
@@ -115,6 +123,16 @@ abstract class Post {
     }
 
     /**
+     * @param generator
+     *            A short description of the application making the request. Max
+     *            64 characters.
+     * @throws UnsupportedEncodingException
+     */
+    public void setGenerator(String generator) throws UnsupportedEncodingException {
+        entity.addPart("generator", new StringBody(generator));
+    }
+
+    /**
      * @param date
      *            Publish date and time for queued posts
      * @throws UnsupportedEncodingException
@@ -163,15 +181,6 @@ abstract class Post {
      */
     public void setTwitter(String twitter) throws UnsupportedEncodingException {
         entity.addPart("send-to-twitter", new StringBody(twitter));
-    }
-
-    private String convertToString(InputStream in) throws IOException {
-        StringBuffer out = new StringBuffer();
-        byte[] b = new byte[4096];
-        for (int n; (n = in.read(b)) != -1;) {
-            out.append(new String(b, 0, n));
-        }
-        return out.toString();
     }
 
 }
