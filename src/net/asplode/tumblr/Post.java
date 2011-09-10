@@ -133,6 +133,16 @@ public abstract class Post {
     }
 
     /**
+     * @param state
+     *            True if the post should be private. False otherwise.
+     * @throws UnsupportedEncodingException
+     */
+    public void setPrivate(boolean state) throws UnsupportedEncodingException {
+        if (state)
+            entity.addPart("private", new StringBody("1"));
+    }
+
+    /**
      * @param date
      *            Publish date and time for queued posts
      * @throws UnsupportedEncodingException
