@@ -8,6 +8,13 @@ Notes:
  * Full API docs: [v1 API](http://www.tumblr.com/docs/en/api/v1), [v2 API](http://www.tumblr.com/docs/en/api/v2).
  * TODO: Add javadoc for all methods.
 
+Dependencies:
+
+ * [Apache HTTP Components](http://hc.apache.org/index.html)
+   Specifically: commons-codec, commons-logging, httpclient, httpcore, httpmime
+ * [JSON](http://www.json.org)
+ * [Signpost Core and Signpost Commons](http://code.google.com/p/oauth-signpost/)
+
 Example use:
 
     TextPost post = new TextPost();
