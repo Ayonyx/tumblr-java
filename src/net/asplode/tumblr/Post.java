@@ -27,9 +27,9 @@ import org.apache.http.entity.mime.MultipartEntity;
 import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.DefaultHttpClient;
 
-abstract class Post {
+public abstract class Post {
 
-    enum State {
+    public enum State {
         PUBLISH("published"), DRAFT("draft"), QUEUE("queue");
         private String state;
 

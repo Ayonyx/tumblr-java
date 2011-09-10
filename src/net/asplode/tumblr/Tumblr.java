@@ -47,7 +47,6 @@ public class Tumblr {
     private String password;
     private String blog;
     private ArrayList<BasicNameValuePair> params;
-    private ArrayList<BasicNameValuePair> xauth_params;
     private String oauth_key;
     private OAuthConsumer consumer;
     HttpClient client;
@@ -60,7 +59,6 @@ public class Tumblr {
      */
     public Tumblr(String oauth_key, String oauth_secret) {
         this.params = new ArrayList<BasicNameValuePair>();
-        this.xauth_params = new ArrayList<BasicNameValuePair>();
         this.oauth_key = oauth_key;
         consumer = new CommonsHttpOAuthConsumer(oauth_key, oauth_secret);
         consumer.setMessageSigner(new HmacSha1MessageSigner());
@@ -79,6 +77,7 @@ public class Tumblr {
     private String[] getOAuthTokens() throws OAuthMessageSignerException,
             OAuthExpectationFailedException, OAuthCommunicationException, ClientProtocolException,
             IOException {
+        ArrayList<BasicNameValuePair> xauth_params = new ArrayList<BasicNameValuePair>();
         xauth_params.add(new BasicNameValuePair("x_auth_mode", "client_auth"));
         xauth_params.add(new BasicNameValuePair("x_auth_username", email));
         xauth_params.add(new BasicNameValuePair("x_auth_password", password));
