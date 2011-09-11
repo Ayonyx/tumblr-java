@@ -206,7 +206,6 @@ public class Tumblr {
             throw new NoBlogException();
         }
         String url = BASE_URL + "/blog/" + blog + "/avatar";
-        System.out.println(url);
         JSONObject result = Get(url);
         return result;
     }
