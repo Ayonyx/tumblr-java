@@ -327,6 +327,8 @@ public class Tumblr {
     }
 
     /**
+     * @param offset
+     *            Post number to start at
      * @return Posts in the queue
      * @throws NoBlogException
      * @throws OAuthMessageSignerException
@@ -337,7 +339,7 @@ public class Tumblr {
      * @throws IOException
      * @throws JSONException
      */
-    public JSONObject getQueue() throws NoBlogException, OAuthMessageSignerException,
+    public JSONObject getQueue(int offset) throws NoBlogException, OAuthMessageSignerException,
             OAuthExpectationFailedException, OAuthCommunicationException, ClientProtocolException,
             IllegalStateException, IOException, JSONException {
         if (blog == null) {
@@ -349,6 +351,8 @@ public class Tumblr {
     }
 
     /**
+     * @param offset
+     *            Post number to start at
      * @return Draft posts
      * @throws NoBlogException
      * @throws OAuthMessageSignerException
@@ -359,7 +363,7 @@ public class Tumblr {
      * @throws IOException
      * @throws JSONException
      */
-    public JSONObject getDrafts() throws NoBlogException, OAuthMessageSignerException,
+    public JSONObject getDrafts(int offset) throws NoBlogException, OAuthMessageSignerException,
             OAuthExpectationFailedException, OAuthCommunicationException, ClientProtocolException,
             IllegalStateException, IOException, JSONException {
         if (blog == null) {
