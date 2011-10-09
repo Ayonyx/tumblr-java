@@ -40,6 +40,10 @@ import org.apache.http.params.HttpParams;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/**
+ * @author nsheridan
+ * 
+ */
 public class Tumblr {
     private final String BASE_URL = "http://api.tumblr.com/v2";
 
@@ -611,4 +615,51 @@ public class Tumblr {
         return result;
     }
 
+    /**
+     * @param id
+     *            Post ID
+     * @param reblog_key
+     *            Post reblog key
+     * @return Status of the request
+     * @throws OAuthMessageSignerException
+     * @throws OAuthExpectationFailedException
+     * @throws OAuthCommunicationException
+     * @throws ClientProtocolException
+     * @throws IllegalStateException
+     * @throws IOException
+     * @throws JSONException
+     */
+    public JSONObject likePost(String id, String reblog_key) throws OAuthMessageSignerException,
+            OAuthExpectationFailedException, OAuthCommunicationException, ClientProtocolException,
+            IllegalStateException, IOException, JSONException {
+        String url = BASE_URL + "/user/like";
+        params.add(new BasicNameValuePair("id", id));
+        params.add(new BasicNameValuePair("reblog_key", reblog_key));
+        JSONObject result = OAuthPost(url);
+        return result;
+    }
+
+    /**
+     * @param id
+     *            Post ID
+     * @param reblog_key
+     *            Post reblog key
+     * @return Status of the request
+     * @throws OAuthMessageSignerException
+     * @throws OAuthExpectationFailedException
+     * @throws OAuthCommunicationException
+     * @throws ClientProtocolException
+     * @throws IllegalStateException
+     * @throws IOException
+     * @throws JSONException
+     */
+    public JSONObject unlikePost(String id, String reblog_key) throws OAuthMessageSignerException,
+            OAuthExpectationFailedException, OAuthCommunicationException, ClientProtocolException,
+            IllegalStateException, IOException, JSONException {
+        String url = BASE_URL + "/user/unlike";
+        params.add(new BasicNameValuePair("id", id));
+        params.add(new BasicNameValuePair("reblog_key", reblog_key));
+        JSONObject result = OAuthPost(url);
+        return result;
+    }
 }
