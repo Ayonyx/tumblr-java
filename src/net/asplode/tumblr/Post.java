@@ -51,7 +51,8 @@ public abstract class Post {
         entity = new MultipartEntity();
     }
 
-    private String convertToString(InputStream in) throws IOException {
+    @SuppressWarnings("unused")
+	private String convertToString(InputStream in) throws IOException {
         StringBuffer out = new StringBuffer();
         byte[] b = new byte[4096];
         for (int n; (n = in.read(b)) != -1;) {

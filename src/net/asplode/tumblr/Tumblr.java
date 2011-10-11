@@ -21,10 +21,13 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
 import oauth.signpost.OAuthConsumer;
+import oauth.signpost.OAuthProvider;
 import oauth.signpost.commonshttp.CommonsHttpOAuthConsumer;
+import oauth.signpost.commonshttp.CommonsHttpOAuthProvider;
 import oauth.signpost.exception.OAuthCommunicationException;
 import oauth.signpost.exception.OAuthExpectationFailedException;
 import oauth.signpost.exception.OAuthMessageSignerException;
+import oauth.signpost.exception.OAuthNotAuthorizedException;
 import oauth.signpost.signature.HmacSha1MessageSigner;
 
 import org.apache.http.HttpResponse;
@@ -45,14 +48,19 @@ import org.json.JSONObject;
  * 
  */
 public class Tumblr {
-    private final String BASE_URL = "http://api.tumblr.com/v2";
+    private final String BASE_URL 			= "http://api.tumblr.com/v2";
+	private final String REQUEST_URL 		= "http://www.tumblr.com/oauth/request_token";
+	private final String ACCESS_URL  		= "http://www.tumblr.com/oauth/access_token";
+	private final String AUTH_URL			= "http://www.tumblr.com/oauth/authorize";
 
+	private String oauth_callback;
     private String email;
     private String password;
     private String blog;
     private ArrayList<BasicNameValuePair> params;
     private String oauth_key;
     private OAuthConsumer consumer;
+    private OAuthProvider provider;
     HttpClient client;
 
     /**
@@ -61,12 +69,14 @@ public class Tumblr {
      * @param oauth_secret
      *            OAuth secret key.
      */
-    public Tumblr(String oauth_key, String oauth_secret) {
+    public Tumblr(String oauth_key, String oauth_secret, String callback_url) {
         this.params = new ArrayList<BasicNameValuePair>();
         this.oauth_key = oauth_key;
         consumer = new CommonsHttpOAuthConsumer(oauth_key, oauth_secret);
         consumer.setMessageSigner(new HmacSha1MessageSigner());
+        provider = new CommonsHttpOAuthProvider(REQUEST_URL, ACCESS_URL, AUTH_URL);
         client = new DefaultHttpClient();
+        oauth_callback = callback_url;
     }
 
     private static String convertToString(InputStream in) throws IOException {
@@ -77,10 +87,31 @@ public class Tumblr {
         }
         return out.toString();
     }
+    
+    public String getAuthURL() throws OAuthMessageSignerException, 
+    		OAuthNotAuthorizedException, OAuthExpectationFailedException, 
+    		OAuthCommunicationException {
+    	return provider.retrieveRequestToken(consumer, oauth_callback);
+    }
+    
+    public void setOAuthTokens(String token, String secret) {
+    	consumer.setTokenWithSecret(token, secret);
+    }
 
     private String[] getOAuthTokens() throws OAuthMessageSignerException,
             OAuthExpectationFailedException, OAuthCommunicationException, ClientProtocolException,
             IOException {
+    	
+    	/* basically, if we're getting here and these things are set we should have already set this information.
+           if not, well then kaboom!!! don't mess up sammy! */
+    	if(oauth_callback != null && !oauth_callback.isEmpty()) {
+    		String[] result = new String[2];
+    		result[0] = consumer.getToken();
+    		result[1] = consumer.getTokenSecret();
+    		
+    		return result;
+    	}
+    	
         ArrayList<BasicNameValuePair> xauth_params = new ArrayList<BasicNameValuePair>();
         xauth_params.add(new BasicNameValuePair("x_auth_mode", "client_auth"));
         xauth_params.add(new BasicNameValuePair("x_auth_username", email));
@@ -148,7 +179,8 @@ public class Tumblr {
         return result;
     }
 
-    private JSONObject Post(String url) throws ClientProtocolException, IOException,
+    @SuppressWarnings("unused")
+	private JSONObject Post(String url) throws ClientProtocolException, IOException,
             IllegalStateException, JSONException {
         HttpPost req = new HttpPost(url);
         UrlEncodedFormEntity entity = new UrlEncodedFormEntity(params, "UTF-8");
